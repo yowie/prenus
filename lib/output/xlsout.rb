@@ -46,7 +46,7 @@ class Xlsout < Baseout
 				end
 			}
 			impacted_hosts.uniq.each do |host|
-				@oFile.syswrite @hosts[host][:ip] + "\n"
+				@oFile.syswrite @hosts[host][:ip] + ":" + @hosts[host][:port]+ "\n"
 			end
 
 			@oFile.syswrite "</td></tr>\n"
