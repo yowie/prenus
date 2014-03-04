@@ -34,7 +34,7 @@ class Xlsout < Baseout
 		# File.open(@options[:outputdir] + "/out.xls", 'w') do |f|
 
 		@oFile.syswrite "<table border=1>\n"
-		@oFile.syswrite "<tr><th>Nessus Plugin ID</th><th>Severity</th><th>Plugin Name</th><th>Synopsis</th><th>Description</th><th>Solution</th><th>Hosts</th></tr>\n"
+		@oFile.syswrite "<tr><th>Nessus Plugin ID</th><th>Severity</th><th>Plugin Name</th><th>Synopsis</th><th>Description</th><th>Solution</th><th>Hosts</th><th>Raw Ports</th></tr>\n"
 
 		@events.each do |k,v|
 			@oFile.syswrite "<tr><td>" + k.to_s + "</td><td>" + v[:severity].to_s + "</td><td>" + v[:plugin_name] + "</td><td>" + v[:synopsis] + "</td><td>" + v[:description] + "</td><td>" + v[:solution].to_s + "</td>"
@@ -46,9 +46,10 @@ class Xlsout < Baseout
 				end
 			}
 			impacted_hosts.uniq.each do |host|
-				@oFile.syswrite @hosts[host][:ip] + ":" + @hosts[host][:port]+ "\n"
+				@oFile.syswrite @hosts[host][:ip] + "\n"
 			end
-
+			
+			@oFile.syswrite "</td><td>" + v[:ports].to_s
 			@oFile.syswrite "</td></tr>\n"
 		end
 
